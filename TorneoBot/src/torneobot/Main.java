@@ -1,10 +1,18 @@
 package torneobot;
 
 import java.util.ArrayList;
+import twitter4j.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TwitterException{
+        
+        String latestStatus="Esto mola much jeje.";
+        twitter4j.Twitter twitter = TwitterFactory.getSingleton();
+        //StatusUpdate str = new StatusUpdate ("Esto mola mucho jeje.");
+        Status status = twitter.updateStatus(latestStatus);
+        System.out.println("Successfully updated the status to [" + status.getText() + "].");
+
         
         Lector l = new Lector();
         Juego j  = new Juego();  
