@@ -6,21 +6,42 @@ import java.text.ParseException;
 import twitter4j.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import static torneobot.Main.tweetsIda;
 
-public class Twitter {
 
+
+public class Twitter  {
+
+    public static Juego j;
+    public static Equipo ganador;
+    
     private static class MyTimeTask extends TimerTask{
-        public static int i=0;
-
+        
+        
         @Override
         public void run(){
+            int i=0;
+            
+            String latestStatus=" ";
             try{
                 twitter4j.Twitter twitter = TwitterFactory.getSingleton();
-                String latestStatus= Integer.toString(i);
+                if(!((j.getTweetsIda().isEmpty())||(j.getTweetsVuelta().isEmpty()))){
+                    if ((i % 2)== 0) {
+                        latestStatus = j.getTweetsIda().get(0); 
+                        j.getTweetsIda().remove(0);
+                        i++;
+                    } else {
+                        latestStatus = j.getTweetsVuelta().get(0);
+                        j.getTweetsVuelta().remove(0);
+                        i++;
+                    }  
+                }else{
+                    latestStatus= ("Y el ganador es: "+ganador.getNombre()+" que anotó "+ganador.getGoles()+ " goles");
+                }
+                
+                
                 Status status = twitter.updateStatus(latestStatus);
                 System.out.println("Successfully updated the status to [" + status.getText() + "].");
-                i++;
+                
 
 
             }catch( TwitterException e){
@@ -29,16 +50,17 @@ public class Twitter {
 
         }
 }
-    public static void Twittear() throws TwitterException, ParseException{
-
+    public static void Twittear(Juego jaux,Equipo ganadoraux) throws TwitterException, ParseException{
+    j = jaux;
+    ganador = ganadoraux;
     DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Date date = dateFormatter .parse("2019-07-09 13:09:30");
+    Date date = dateFormatter .parse("2019-07-09 14:17:00");
 
     //Now create the time and schedule it
     Timer timer = new Timer();
 
-    int period = 30000;//30secs
-    timer.schedule(new MyTimeTask(), date, period );
+    int period = 10000;//30secs
+    timer.schedule(new MyTimeTask(), date, period);
     }
 }
 /*
@@ -60,20 +82,20 @@ public class Twitter {
         
 }*/
 /*
-a
-s
-d
-f
-g
-h
-j
-k
-l
-ñ
-z
-x
-c
-v
-b
-n
+RealMadrid
+Barcelona
+AtleticodeMadrid
+Getafe
+Arsenal
+Valencia
+Chelsea
+ManchesterUnited
+ManchesterCity
+Juventus
+Milan
+BorussiaDortmund
+Monaco
+Sevilla
+PSG
+Murcia
 */

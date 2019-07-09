@@ -4,6 +4,26 @@ import java.util.ArrayList;
 
 public class Juego {
     private int max_goles = 5;
+    public ArrayList<String> tweetsIda = new ArrayList<>();
+    public ArrayList<String> tweetsVuelta = new ArrayList<>();
+
+    public ArrayList<String> getTweetsIda() {
+        return tweetsIda;
+    }
+
+    public void setTweetsIda(ArrayList<String> tweetsIda) {
+        this.tweetsIda = tweetsIda;
+    }
+
+    public ArrayList<String> getTweetsVuelta() {
+        return tweetsVuelta;
+    }
+
+    public void setTweetsVuelta(ArrayList<String> tweetsVuelta) {
+        this.tweetsVuelta = tweetsVuelta;
+    }
+    
+    
     
     private Equipo quiengana (Partido p, String nuevoTweet){
         int gol_local_ida = Integer.parseInt(p.getIda().substring(0, p.getIda().indexOf(".")));
@@ -54,7 +74,7 @@ public class Juego {
             return p.getVisitante();
         }    
     }
-    public Equipo juego (Partido p, int i, int ronda, ArrayList<String> tweetsIda, ArrayList<String> tweetsVuelta){
+    public Equipo juego (Partido p, int i, int ronda){
         Equipo ganador;
         String nuevoTweetIda = "";
         String nuevoTweetVuelta = "";
