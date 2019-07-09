@@ -1,20 +1,13 @@
 package torneobot;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import twitter4j.*;
 
 public class Main {
 
-    public static ArrayList<String> tweetsIda = new ArrayList<>();
-    public static ArrayList<String> tweetsVuelta = new ArrayList<>();
-    
-    public static void main(String[] args) throws TwitterException{
-        
-        /*String latestStatus="Esto mola much jeje.";
-        twitter4j.Twitter twitter = TwitterFactory.getSingleton();
-        //StatusUpdate str = new StatusUpdate ("Esto mola mucho jeje.");
-        Status status = twitter.updateStatus(latestStatus);
-        System.out.println("Successfully updated the status to [" + status.getText() + "].");*/
+    public static void main(String[] args) throws TwitterException, ParseException{
+
         
         Lector l = new Lector();
         Juego j  = new Juego();  
@@ -28,12 +21,28 @@ public class Main {
             listaPartidos = s.sorteo(listaEquipos, ronda);  
             listaEquipos = new ArrayList<>();
             for (int i = 1; i <= listaPartidos.length; i++) {
-                Equipo ganador = j.juego(listaPartidos[i-1], i, ronda, tweetsIda, tweetsVuelta);
+                Equipo ganador = j.juego(listaPartidos[i-1], i, ronda);
                 listaEquipos.add(ganador);
             }   
         }       
-        tweetsVuelta.add("Y el ganador es: "+listaEquipos.get(0).getNombre()+" que anotó "+listaEquipos.get(0).getGoles()+ " goles");
-
-    }
-    
+        torneobot.Twitter.Twittear(j,listaEquipos.get(0));
+    }  
 }
+/*
+Real_Madrid
+Barcelona
+Atletico_de_Madrid
+Getafe
+Arsenal
+Valencia
+Chelsea
+Manchester_United
+Manchester_City
+Juventus
+Milan
+Borussia_Dortmund
+Monaco
+Sevilla
+PSG
+Murcia
+*/
